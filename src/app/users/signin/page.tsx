@@ -4,32 +4,31 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
 import { supabase } from "@/utils/supabase"; 
+import { useRouter } from "next/navigation";
 
 type Inputs = {
   email: string
   password: string
-  passwordConfirmation: string
 }
 
-const Signup = () => {
+const Signin = () => {
   const { register, handleSubmit, reset, formState: { errors }, } = useForm<Inputs>(); 
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async(inputData) => {
     const { email, password } = inputData;
 
-    const { error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
-      password,
-      options: {
-        emailRedirectTo: "http://localhost:3000/users/signin"
-      },
+      password
     })
 
     if (error) {
-      alert('登録に失敗しました');
+      alert('ログインに失敗しました');
     } else {
-      alert('登録したemailに認証メールを送信しました。')
+      alert('ログインしました');
       reset();
+      router.push("/home");
     }
   }
 
@@ -61,24 +60,11 @@ const Signup = () => {
         />
         {errors.password && <span className="text-red-500">{errors.password.message}</span>}
       </div>
-      <div>
-        <TextField 
-          id="password-confirmation"
-          label="password Confirmation"
-          variant="standard"
-          className="w-full"
-          type="password"
-          {...register("passwordConfirmation", { 
-            required: "password confirmation is required" 
-          })}
-        />
-        {errors.passwordConfirmation && <span className="text-red-500">{errors.passwordConfirmation.message}</span>}
-      </div>
-      <Button variant="outlined" type="submit">登録</Button>
+      <Button variant="outlined" type="submit">ログイン</Button>
     </form>
 
   </div>
   )
 }
 
-export default Signup;
+export default Signin;
