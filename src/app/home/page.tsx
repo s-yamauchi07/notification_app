@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { subscribeUser, unsubscribeUser, sendNotification } from '../actions';
-import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
 
 // push通知に必要な公開鍵(public Key)をBase64形式からUnit8Arrayに変換する処理
