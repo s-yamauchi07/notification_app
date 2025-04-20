@@ -16,11 +16,7 @@ self.addEventListener('push', function (event) {
     }
     // 通知を実際に表示させる処理
     // event.waitUntil(self.registration.showNotification(data.title, options))
-    event.waitUntil(
-      self.registration.showNotification(data.title, options)
-        .then(() => console.log('Notification displayed successfully'))
-        .catch((error) => console.error('Error displaying notification:', error))
-    );
+    event.waitUntil(self.registration.showNotification(data.title, options));
   }
 })
 
