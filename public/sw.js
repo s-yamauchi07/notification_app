@@ -22,9 +22,7 @@ self.addEventListener('push', function (event) {
 
 // push通知がクリックされた時の処理
 self.addEventListener('notificationclick', function (event) {
-  console.log('Notification click received.')
   event.notification.close()
   // push通知がクリックされた時に遷移する先のページを指定
-  // event.waitUntil(clients.openWindow('https://notification-app-alpha.vercel.app/home'))
-  event.waitUntil(clients.openWindow('https://localhost:3000/home'))
+  event.waitUntil(clients.openWindow('https://notification-app-alpha.vercel.app/home'))
 })
