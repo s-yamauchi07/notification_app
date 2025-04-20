@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { subscribeUser, unsubscribeUser, sendNotification } from '../actions';
+import { TextField } from '@mui/material';
+import { Button } from '@mui/material';
 
 // push通知に必要な公開鍵(public Key)をBase64形式からUnit8Arrayに変換する処理
 function urlBase64ToUnit8Array(base64String: string) {
@@ -124,24 +126,29 @@ const Home = () => {
       </h1>
 
       <div>
-        <h3>Push notifications</h3>
+        <h3 className="text-lg font-bold mb-6">通知設定</h3>
         {subscription ? (
-          <>
-            <p>プッシュ通知の設定：有効</p>
-            <button onClick={unsubscribeFromPush}>購読解除</button>
-            <input
-              type="text"
-              placeholder="Enter notification message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <button onClick={sendTestNotification}>Send Test</button>
-          </>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-4">
+              <p>プッシュ通知の設定：ON</p>
+              <Button variant="outlined" onClick={unsubscribeFromPush}>通知の解除</Button>
+            </div>
+            <div className="flex items-center gap-2">
+              <input 
+                type="text"
+                placeholder="通知設定の内容を記入"
+                value={message}
+                className='p-2 border border-gray-200'
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              <Button variant="outlined" onClick={sendTestNotification}>Send Test</Button>
+            </div>
+          </div>
         ) : (
-          <>
-            <p>You are not subscribed to push notifications.</p>
-            <button onClick={subscribeToPush}>Subscribe</button>
-          </>
+          <div className="flex flex-col gap-4">
+            <p>プッシュ通知の設定：OFF</p>
+            <Button variant="outlined" onClick={subscribeToPush}>通知ON</Button>
+          </div>
         )}
       </div>
     </div>
